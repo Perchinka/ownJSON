@@ -1,4 +1,4 @@
-from ownlexer import Lexer
+from custom_exceptions.exceptions import InvalidJsonException
 
 class Parser:
     def parse(self, tokens):
@@ -20,10 +20,10 @@ class Parser:
             if type(key) is str:
                 tokens = tokens[1:]
             else:
-                raise Exception('Expected string as key, got {}'.format(key))
+                raise InvalidJsonException('Expected string as key, got {}'.format(key))
             
             if tokens[0] != ':':
-                raise Exception('Expected colon, got {}'.format(tokens[2]))
+                raise InvalidJsonException('Expected colon, got {}'.format(tokens[2]))
             
             value, tokens = self.parse(tokens[1:])
             obj[key] = value
@@ -33,7 +33,7 @@ class Parser:
             elif tokens[0] == ',':
                 tokens = tokens[1:]
             else:
-                raise Exception('Expected comma or end of object, got {}'.format(tokens[0]))
+                raise InvalidJsonException('Expected comma or end of object, got {}'.format(tokens[0]))
                 
     def parse_list(self, tokens: list):
         arr = []
@@ -50,4 +50,4 @@ class Parser:
             elif tokens[0] == ',':
                 tokens = tokens[1:]
             else:
-                raise Exception('Expected comma or end of array, got {}'.format(tokens[0]))
+                raise InvalidJsonException('Expected comma or end of array, got {}'.format(tokens[0]))

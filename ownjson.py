@@ -1,6 +1,6 @@
 from ownlexer import Lexer
 from ownparser import Parser
-
+from custom_exceptions.exceptions import InvalidJsonException
 
 def from_string(json_string: str):
     lexer = Lexer()
@@ -13,5 +13,6 @@ def is_valid(json_string: str):
     try:
         from_string(json_string)
         return True
-    except Exception as e:
+    except InvalidJsonException as e:
         return e
+    

@@ -1,3 +1,6 @@
+from custom_exceptions.exceptions import InvalidJsonException
+
+
 class Lexer:
     def lex(self, json_string: str):
         tokens = []
@@ -32,7 +35,7 @@ class Lexer:
                 json_string = json_string[1:]
                 continue
             else:
-                raise Exception(f'Invalid JSON string: Unexpected character {json_string[0]}')
+                raise InvalidJsonException(f'Invalid JSON string: Unexpected character: {json_string[0]}')
             
         return tokens
         
@@ -47,7 +50,7 @@ class Lexer:
                 return string, json_string[len(string) + 1:]
             else:
                 string += char
-        raise Exception('Expected end quote, got {}'.format(json_string[:1]))
+        raise InvalidJsonException('Expected quote, got: {}'.format(json_string[:1]))
     
     def lex_number(self, json_string: str):
         number = ''
@@ -83,4 +86,3 @@ class Lexer:
         if json_string[0] in ' \t\n':
             return True, json_string[1:]
         return None, json_string
-    
