@@ -23,7 +23,7 @@ class Parser:
                 raise InvalidJsonException('Expected string as key, got {}'.format(key))
             
             if tokens[0] != ':':
-                raise InvalidJsonException('Expected colon, got {}'.format(tokens[2]))
+                raise InvalidJsonException('Expected colon, got {}'.format(tokens[0]))
             
             value, tokens = self.parse(tokens[1:])
             obj[key] = value
